@@ -2,26 +2,30 @@ import { Alert, StyleSheet, Text, View } from 'react-native'
 import InputBox from '../../components/forms/InputBox'
 import { useState } from 'react'
 import SubmitBtn from '../../components/forms/SubmitBtn';
+import axios from 'axios'
 
-const Register = ({navigation}) => {
+const Register = ({ navigation }) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         try {
             setLoading(true)
-            if(!name || !email || !password){
-            Alert.alert("please fill all fields.")
-              setLoading(false)
-              return;
+            if (!name || !email || !password) {
+                Alert.alert("please fill all fields.")
+                setLoading(false)
+                return;
             }
+
             setLoading(false)
-            console.log("Register data",{name,email,password})
-            
+            const {data} = await axios.post('http://10.75.197.197:8080/api/v1/auth/register', { name, email, password })
+            alert(data && data.message)
+
         } catch (error) {
+            alert(error.response.data.message)
             setLoading(false)
             console.log(error)
         }
@@ -51,12 +55,12 @@ const Register = ({navigation}) => {
                     setValue={setPassword}
                 />
             </View>
-            <SubmitBtn 
-            btnTitle="click to sign in" 
-            loading={loading} 
-            handleSubmit={handleSubmit}
+            <SubmitBtn
+                btnTitle="click to sign in"
+                loading={loading}
+                handleSubmit={handleSubmit}
             />
-            <Text style={styles.LinkText} >Already Registered Please<Text style={styles.Linktxt} onPress={()=>navigation.navigate('Login')} > Login</Text></Text>
+            <Text style={styles.LinkText} >Already Registered Please<Text style={styles.Linktxt} onPress={() => navigation.navigate('Login')} > Login</Text></Text>
         </View>
     )
 }
@@ -76,12 +80,12 @@ const styles = StyleSheet.create({
         color: '#1e2225',
         marginBottom: 20
     },
-    LinkText:{
-        fontSize:20,
-        textAlign:'center'
+    LinkText: {
+        fontSize: 20,
+        textAlign: 'center'
     },
-    Linktxt:{
-        color:'red'
+    Linktxt: {
+        color: 'red'
     }
 
 })
