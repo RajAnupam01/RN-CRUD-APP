@@ -1,50 +1,51 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import InputBox from '../../components/forms/InputBox'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { AuthContext } from "../../context/authContext"
 import SubmitBtn from '../../components/forms/SubmitBtn';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from 'axios';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
+
+    const [state, setState] = useContext(AuthContext)
 
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         try {
             setLoading(true)
-            if(!email || !password){
-            Alert.alert("please fill all fields.")
-              setLoading(false)
-              return;
+            if (!email || !password) {
+                Alert.alert("please fill all fields.")
+                setLoading(false)
+                return;
             }
-            setLoading(false)
-            const {data} = await axios.post('http://10.75.197.197:8080/api/v1/auth/login', { email, password })
-             await AsyncStorage.setItem('@auth',JSON.stringify(data));
+            const { data } = await axios.post('http://10.11.40.197:8080/api/v1/auth/login', { email, password })
+            setState(data)
+            await AsyncStorage.setItem('@auth', JSON.stringify(data));
             alert(data && data.message)
-           
-            
-            
+            setLoading(false)
+            navigation.navigate("Home")
+
+
+
         } catch (error) {
-             alert(error.response.data.message)
+            alert(error.response.data.message)
             setLoading(false)
             console.log(error)
         }
     }
 
-    const getlocalstoragedata = async() =>{
-        let data = await AsyncStorage.getItem('@auth')
-        console.log(data)
-    }
-    getlocalstoragedata();
+
 
     return (
         <View style={styles.container} >
             <Text style={styles.pageTitle} >Login</Text>
             <View style={{ marginHorizontal: 20 }}>
-    
+
                 <InputBox
                     inputTitle={'Email'}
                     keyboardType={"email-address"}
@@ -60,12 +61,12 @@ const Login = ({navigation}) => {
                     setValue={setPassword}
                 />
             </View>
-            <SubmitBtn 
-            btnTitle="click to sign up" 
-            loading={loading} 
-            handleSubmit={handleSubmit}
+            <SubmitBtn
+                btnTitle="click to sign up"
+                loading={loading}
+                handleSubmit={handleSubmit}
             />
-            <Text style={styles.LinkText} >Not a User Please<Text style={styles.Linktxt} onPress={()=>navigation.navigate('Register')} > Register</Text></Text>
+            <Text style={styles.LinkText} >Not a User Please<Text style={styles.Linktxt} onPress={() => navigation.navigate('Register')} > Register</Text></Text>
         </View>
     )
 }
@@ -85,12 +86,12 @@ const styles = StyleSheet.create({
         color: '#1e2225',
         marginBottom: 20
     },
-    LinkText:{
-        fontSize:20,
-        textAlign:'center'
+    LinkText: {
+        fontSize: 20,
+        textAlign: 'center'
     },
-    Linktxt:{
-        color:'red'
+    Linktxt: {
+        color: 'red'
     }
 
 })
