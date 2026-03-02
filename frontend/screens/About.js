@@ -1,13 +1,11 @@
-import { useContext } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { AuthContext } from '../context/authContext'
 import Footer from '../components/menus/Footer'
 
-const Home = () => {
-  const [state] = useContext(AuthContext)
+const About = () => {
+  
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(state,null,4)}</Text>
+        <Text>About</Text>
       <View style={{ flex: 1, justifyContent: 'flex-end' }} >
         <Footer />
     </View>
@@ -15,7 +13,7 @@ const Home = () => {
   )
 }
 
-export default Home
+export default About
 
 const styles = StyleSheet.create({
   container:{

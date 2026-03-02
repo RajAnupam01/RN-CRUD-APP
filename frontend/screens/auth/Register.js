@@ -21,7 +21,7 @@ const Register = ({ navigation }) => {
             }
 
             setLoading(false)
-            const {data} = await axios.post('http://10.75.197.197:8080/api/v1/auth/register', { name, email, password })
+            const {data} = await axios.post('http://10.11.130.197:8080/api/v1/auth/register', { name, email, password })
             alert(data && data.message)
             navigation.navigate('Login')
         } catch (error) {
