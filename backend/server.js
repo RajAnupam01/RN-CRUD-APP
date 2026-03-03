@@ -18,6 +18,7 @@ app.use(morgan('dev'))
 
 
 app.use('/api/v1/auth',require('./routes/userRoutes'))
+app.use('/api/v1/post',require('./routes/postRoutes'))
 
 const PORT = process.env.PORT || 8080
 
