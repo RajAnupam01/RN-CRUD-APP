@@ -18,7 +18,7 @@ const Account = () => {
   const handleUpdate = async() => {
     try {
      setLoading(true)
-     const {data} = await axios.put('http://10.208.158.197:8080/api/v1/auth/updated-user',{name,email,password},{headers:{Authorization:`Bearer ${token && token}`}})
+     const {data} = await axios.put('http://10.92.81.197:8080/api/v1/auth/updated-user',{name,email,password},{headers:{Authorization:`Bearer ${token && token}`}})
      setLoading(false)
      let UD = JSON.stringify(data)
      setState({...state,user:UD?.updatedUser})

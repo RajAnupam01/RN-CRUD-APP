@@ -1,16 +1,21 @@
 import { useContext } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { AuthContext } from '../context/authContext'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { PostContext } from "../context/postContext"
 import Footer from '../components/menus/Footer'
+import PostCard from '../components/PostCard'
 
 const Home = () => {
-  const [state] = useContext(AuthContext)
+
+  const [posts] = useContext(PostContext)
   return (
     <View style={styles.container}>
-      <Text>{JSON.stringify(state,null,4)}</Text>
+      <ScrollView>
+        <PostCard posts={posts} />
+      </ScrollView>
+
       <View style={{ flex: 1, justifyContent: 'flex-end' }} >
         <Footer />
-    </View>
+      </View>
     </View>
   )
 }
@@ -18,10 +23,10 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    justifyContent:'space-between',
-    marginTop:40,
-    margin:10
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    margin: 10,
+    padding:10
   }
 })
