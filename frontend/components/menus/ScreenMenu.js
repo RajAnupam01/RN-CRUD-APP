@@ -7,7 +7,7 @@ import { AuthContext } from '../../context/authContext'
 import Header from './Header'
 import Post from '../../screens/Post'
 import Account from '../../screens/Account'
-import About from '../../screens/About'
+import Myposts from '../../screens/Myposts'
 
 const ScreenMenu = () => {
 
@@ -24,8 +24,8 @@ const ScreenMenu = () => {
 
                     <Stack.Screen name='Post' component={Post} options={{ title: 'Post' }} />
 
-                    <Stack.Screen name='About' component={About} options={{ title: 'About' }} />
 
+                    <Stack.Screen name='Myposts' component={Myposts} options={{ title: 'Myposts' }} />
 
                     <Stack.Screen name='Account' component={Account} options={{ title: 'Account' }} />
 

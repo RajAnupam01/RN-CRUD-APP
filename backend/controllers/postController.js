@@ -41,9 +41,44 @@ const getAllPostController = async(req,res) => {
         console.log(error)
         res.status(500).send({
             success:false,
-            message:'Error in Get all post api.'
+            message:'Error in Get all post api.',
+            error
+        })
+    }
+}
+const getUserPostController = async(req,res)=>{
+    try {
+        const userPosts = await postModel.find({postedBy:req.auth._id})
+        res.status(200).send({
+            succes:true,
+            message:'User posts',
+            userPosts
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message:'Error in Get User post api',
+            error
         })
     }
 }
 
-module.exports = {createPostController,getAllPostController}
+const deletePostController = async(req,res) =>{
+    try {
+        const {id} = req.params
+        await postModel.findByIdAndDelete({_id:id})
+        res.status(200).send({
+            success:true,
+            message:'Your post has been deleted successfully'
+        })
+    } catch (error) {
+        console.log(error)
+        return res.status(500).send({
+            success:false,
+            message:'Error in Delete post api'
+        })
+    }
+}
+
+module.exports = {createPostController,getAllPostController,getUserPostController,deletePostController}

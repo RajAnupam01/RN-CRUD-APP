@@ -9,11 +9,10 @@ const Home = () => {
   const [posts] = useContext(PostContext)
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}  >
         <PostCard posts={posts} />
       </ScrollView>
-
-      <View style={{ flex: 1, justifyContent: 'flex-end' }} >
+      <View>
         <Footer />
       </View>
     </View>

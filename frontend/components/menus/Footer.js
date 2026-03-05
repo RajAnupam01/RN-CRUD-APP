@@ -16,9 +16,9 @@ const Footer = () => {
                 <FontAwesome6 name='plus-square' style={styles.iconStyle} color={route.name === 'Post' && 'orange'} />
                 <Text>Post</Text>
             </TouchableOpacity >
-            <TouchableOpacity onPress={() => navigation.navigate('About')} >
-                <FontAwesome6 name='info' style={styles.iconStyle} color={route.name === 'About' && 'orange'} />
-                <Text>About</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('Myposts')} >
+                <FontAwesome6 name='list' style={styles.iconStyle} color={route.name === 'Myposts' && 'orange'} />
+                <Text>MyPosts</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('Account')} >
                 <FontAwesome6 name='user' style={styles.iconStyle} color={route.name === 'Account' && 'orange'} />

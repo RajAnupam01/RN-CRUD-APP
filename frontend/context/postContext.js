@@ -11,7 +11,7 @@ const PostProvider = ({ children }) => {
     const getAllPost = async() => {
         setLoading(true)
         try {
-            const {data} = await axios.get("http://10.92.81.197:8080/api/v1/post/all-post")
+            const {data} = await axios.get("http://10.105.241.197:8080/api/v1/post/all-post")
             setLoading(false)
             setPosts(data?.posts)
         } catch (error) {
