@@ -17,7 +17,7 @@ const Myposts = () => {
     const getUserPosts = async() => {
         try {
             setLoading(true)
-            const {data} =await axios.get('http://10.105.241.197:8080/api/v1/post/user-post',{ headers: { Authorization: `Bearer ${token && token}` } })
+            const {data} =await axios.get('http://10.200.6.197:8080/api/v1/post/user-post',{ headers: { Authorization: `Bearer ${token && token}` } })
             setLoading(false)
             setPosts(data?.userPosts)
         } catch (error) {

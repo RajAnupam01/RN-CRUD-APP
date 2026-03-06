@@ -5,9 +5,12 @@ import { useContext, useState } from 'react'
 import axios from 'axios'
 import { useNavigation } from "@react-navigation/native"
 import { AuthContext } from '../context/authContext'
+import Editmodal from './Editmodal'
 
 
 const PostCard = ({ posts, cantrash }) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [state] = useContext(AuthContext)
     const { token } = state
@@ -15,6 +18,8 @@ const PostCard = ({ posts, cantrash }) => {
 
     const navigation = useNavigation()
     const [loading, setLoading] = useState(false)
+
+    const [post, setPost] = useState({})
 
     const handleDeletePrompt = (id) => {
         Alert.alert("Attention", "Are you sure want to delete this post?", [
@@ -35,7 +40,7 @@ const PostCard = ({ posts, cantrash }) => {
     const handleDeletePost = async (id) => {
         try {
             setLoading(true)
-            const data = await axios.delete(`http://10.105.241.197:8080/api/v1/post/delete-post/${id}`, { headers: { Authorization: `Bearer ${token && token}` } })
+            const data = await axios.delete(`http://10.200.6.197:8080/api/v1/post/delete-post/${id}`, { headers: { Authorization: `Bearer ${token && token}` } })
             setLoading(false)
             alert(data?.data.message)
             navigation.navigate("Home")
@@ -46,10 +51,14 @@ const PostCard = ({ posts, cantrash }) => {
     }
     return (
         <View style={styles.container}  >
+            {cantrash && <Editmodal modalVisible={modalVisible} setModalVisible={setModalVisible} post={post} />}
             <Text style={styles.heading} >Total Post {posts?.length}</Text>
             {posts?.map((post, i) => (
                 <View style={styles.card} key={i} >
-                    {cantrash && (<View style={{ marginVertical: 10 }} >
+                    {cantrash && (<View style={{ marginHorizontal: 20, marginVertical: 10, flexDirection: 'row', gap: 20 }} >
+                        <Text>
+                            <FontAwesome6 name="pen" color={"blue"} size={16} onPress={() =>{setPost(post), setModalVisible(true)}} />
+                        </Text>
                         <Text>
                             <FontAwesome6 name="trash" color={"red"} size={16} onPress={() => handleDeletePrompt(post?._id)} />
                         </Text>
